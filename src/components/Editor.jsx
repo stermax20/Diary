@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getFormattedDate, emotionList } from '../utils';
 import Button from './Button';
@@ -40,12 +40,16 @@ const Editor = ({ initData, onSubmit }) => {
     };
 
     // 기분이 변경했을 때 변경사항을 상태변수에 저장
-    const handleOnChangeEmotion = (emotionId) => {
-        setState({
-            ...state,
-            emotionId,
-        });
-    };
+    const handleOnChangeEmotion = useCallback(
+        (emotionId) => {
+            setState({
+                ...state,
+                emotionId,
+            });
+        },
+        [state]
+    );
+    
     const handleSubmit = (e) => {
         onSubmit(state);
     };
